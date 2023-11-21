@@ -48,3 +48,19 @@ Thumbs.db
 *.mov
 *.wmv
 
+# Exclude files from virtual environment
+.venv/
+
+# Exclude trash
+trash/
+
+# Ignore all the contents of a folder, but keep empy folder structure
+INPUT/*
+!INPUT/.gitkeep
+!INPUT/examples/
+
+OUTPUT/*
+!OUTPUT/.gitkeep
+
+stream_data/*
+!stream_data/.gitkeep
