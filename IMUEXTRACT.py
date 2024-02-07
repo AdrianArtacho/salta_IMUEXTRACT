@@ -4,6 +4,7 @@ import time_string as time_string
 import time_signature as time_signature
 import time_midi as time_midi
 import time_stamps as time_stamps
+import pyt_abstractions.df.resampling as resampling
 
 def main(midi_file = 'Anna-RAW.mid',
          input_path='INPUT/',
@@ -62,7 +63,9 @@ def main(midi_file = 'Anna-RAW.mid',
                 # if verbose:
                 #     print(cc_data[control_number])
 
-    # exit()
+    
+    list_of_streams = []
+    
     # Create separate DataFrames for each CC stream
     for control_number, data in cc_data.items():
         cc_df = pd.DataFrame(data)
@@ -72,46 +75,56 @@ def main(midi_file = 'Anna-RAW.mid',
 
         csv_filename = f'{streams_path}CC{control_number}_data.csv'
         cc_df.to_csv(csv_filename, index=False)
-
+        list_of_streams.append(csv_filename)
         print(f'Saved CC{control_number} data as {streams_path+csv_filename}')
 
-    # print("cc_data:")
-    # print(cc_data.items())
+
+    if verbose:
+        print(list_of_streams)  # csv files
+    # exit()
+
+    print("Resampling files...")
+
+    # Initialize an empty DataFrame for the result; it will be populated in the loop
+    combined_df = None
+
+    
+    print(list_of_streams)
+    list_of_resampled_streams = []
+    for stream in list_of_streams:
+        resampled_stream = resampling.main(file_name = stream,
+                        total_duration_seconds = 2*60 + 16,
+                        file_path='',
+                        rel_path='',
+                        fps = 30,
+                        include_timestamp=False,
+                        verbose=False)
+        list_of_resampled_streams.append(resampled_stream)
+        if verbose:
+            print(type(resampled_stream))
+            print(resampled_stream.head())
+
+    if verbose:
+        print(len(list_of_resampled_streams))
+ 
+
         
-    # Iterate through the MIDI file and print its contents
-    # for i, track in enumerate(mid.tracks):
-    #     print(f"Track {i}:")
-    #     for msg in track:
-    #         print(msg)
+    # Combine DataFrames
+    # Ensure the index of each DataFrame; if not, set it before this step
+    combined_df = pd.concat(list_of_resampled_streams, axis=1)
 
+    # Optional: if you want 'Timestamp' back as a column instead of the index
+    # combined_df.reset_index(inplace=True)
 
-    # # Iterate through the MIDI file and extract relevant CC information
-    # for track in mid.tracks:
-    #     time_elapsed = 0  # Initialize time elapsed in ticks
-        
-    #     for msg in track:
-    #         time_elapsed += msg.time
-    #         if msg.type == 'control_change':
-    #             timestamps.append(time_elapsed)
-    #             control_numbers.append(msg.control)
-    #             control_values.append(msg.value)
+    # Save the combined DataFrame to a CSV file
+    csv_file_path = output_path + 'CC-combined.csv'  # Specify your desired file path and name
+    combined_df.to_csv(csv_file_path, index=False)
 
-    # # Create a DataFrame from the extracted CC data
-    # data = {
-    #     'Timestamp': timestamps,
-    #     'Control_Number': control_numbers,
-    #     'Control_Value': control_values
-    # }
+    print(f"Combined DataFrame saved to {csv_file_path}")
+    
+    # print(combined_df.head())
 
-    # df = pd.DataFrame(data)
-
-    # if verbose:
-    #     # Print the DataFrame
-    #     print(df)
-
-    # df = pd.DataFrame(data)
-    # df.to_csv(output_path+'blah.csv', index=False)
-
+    
     
 
 
@@ -119,5 +132,5 @@ if __name__ == '__main__':
     main(midi_file = 'Anna-RAW.mid',
          time_length_str = '39:32.032',
          time_signature_str = '4/4',
-         verbose=True)
+         verbose=False)
     

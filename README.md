@@ -20,6 +20,14 @@ Run main script:
 python IMUEXTRACT.py
 ```
 
+Plot it :
+
+```python
+python combine_plot.py
+```
+
+Both the resulting `CC-combined.csv` and the plot `CC-combined,png` will be stored in the folder `OUTPUT/`.
+
 
 
 ---
