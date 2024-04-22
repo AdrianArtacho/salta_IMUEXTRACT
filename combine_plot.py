@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 
 def main(csv_file_name,
          output_path='OUTPUT/',
+         string_prefix='',
          verbose=False):
     
     csv_file_path = output_path + csv_file_name
@@ -28,7 +29,7 @@ def main(csv_file_name,
     plt.ylabel('Control Value')
     plt.legend()
 
-    plt.savefig(output_path+'CC-combined.png', dpi=300)  # Specify the filename and DPI for resolution
+    plt.savefig(output_path+string_prefix+'CC-combined.png', dpi=300)  # Specify the filename and DPI for resolution
 
     # Show the plot
     plt.show()
@@ -37,4 +38,5 @@ if __name__ == "__main__":
     csv_file_name = 'CC-combined.csv'
     main(csv_file_name,
          output_path='OUTPUT/',
+         string_prefix='',
          verbose=True)

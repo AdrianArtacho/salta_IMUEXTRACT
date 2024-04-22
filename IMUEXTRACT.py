@@ -5,6 +5,12 @@ import time_signature as time_signature
 import time_midi as time_midi
 import time_stamps as time_stamps
 import pyt.df.resampling as resampling
+import gui.gui_browse as gui_browse
+import pyt.paths.empty_folder as empty_folder
+import pyt.paths.create_folder as create_folder
+import os
+import combine_plot
+import time_length
 
 def main(midi_file = 'Anna-RAW.mid',
          input_path='INPUT/',
@@ -15,16 +21,38 @@ def main(midi_file = 'Anna-RAW.mid',
          verbose=False):
 
     if midi_file == '':
-        print("We need to browse")
-        exit()
+        # print("We need to browse")
+        midi_file_path = gui_browse.main(params_title='Browse files [→TAB]',
+                                    params_initbrowser='INPUT/',
+                                    params_extensions='.mid',               # E.g. '.csv'
+                                    size=(40,20),
+                                    verbose=False)
+        # exit()
     else:
-        midi_file = midi_file
+        # midi_file = midi_file
+        midi_file_path = input_path+midi_file
 
     # Specify the path to your MIDI file
-    midi_file_path = input_path+midi_file
+    
     if verbose:
         print("midi_file_path:", midi_file_path)
 
+    ### EMPTY INTER/ FOLDER
+    empty_folder.main('INTER/', verbose=True)
+    
+    ### NEW FOLDER NAME
+    filename_without_extension = os.path.splitext(os.path.basename(midi_file_path))[0]
+    if verbose:
+        print("filename_without_extension:", filename_without_extension)
+
+    ### CREATE NEW FOLDER
+    create_folder.main(filename_without_extension, local_folder = 'OUTPUT')
+    
+    ### ASKING TO CONFIRM THE LENGTH!!!
+    # time_str, time_str_list = time_length(time_str=time_length_str)
+    # print(time_str)
+
+    exit()
     max_datapoint = 454831      # ???
     dps_rounded = time_midi.main(max_datapoint,
                                 time_length_str = time_length_str, #'39:32.032', 
@@ -123,20 +151,30 @@ def main(midi_file = 'Anna-RAW.mid',
     # combined_df.reset_index(inplace=True)
 
     # Save the combined DataFrame to a CSV file
-    csv_file_path = output_path + 'CC-combined.csv'  # Specify your desired file path and name
+    composite_filename = filename_without_extension+'_'+'CC-combined.csv'
+    csv_file_path = output_path+filename_without_extension+'/'+composite_filename  # Specify your desired file path and name
     combined_df.to_csv(csv_file_path, index=False)
 
     print(f"Combined DataFrame saved to {csv_file_path}")
     
     # print(combined_df.head())
 
+    # exit()
+    # combine_plot.main(csv_file_path,OUTPUT/Elda-RAW/CC-combined.csv
+    combine_plot.main(composite_filename,
+                      output_path='OUTPUT/'+filename_without_extension+'/',
+                      string_prefix=filename_without_extension+'_',
+                      verbose=True)
     
-    
+
+    # main('CC-combined.csv',
+    #      output_path='OUTPUT/',
+    #      verbose=True)
 
 
 if __name__ == '__main__':
-    main(midi_file = 'Anna-RAW.mid',
+    main(midi_file = '',    # 'Anna-RAW.mid'
          time_length_str = '39:32.032',
          time_signature_str = '4/4',
-         verbose=False)
+         verbose=True)
     
