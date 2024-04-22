@@ -4,16 +4,22 @@ import time_string as time_string
 import time_signature as time_signature
 import time_midi as time_midi
 import time_stamps as time_stamps
-import pyt_abstractions.df.resampling as resampling
+import pyt.df.resampling as resampling
 
 def main(midi_file = 'Anna-RAW.mid',
          input_path='INPUT/',
          output_path='OUTPUT/',
-         streams_path='stream_data/',
+         streams_path='INTER/',
          time_length_str = '',
          time_signature_str = '',
          verbose=False):
-    
+
+    if midi_file == '':
+        print("We need to browse")
+        exit()
+    else:
+        midi_file = midi_file
+
     # Specify the path to your MIDI file
     midi_file_path = input_path+midi_file
     if verbose:
@@ -76,7 +82,7 @@ def main(midi_file = 'Anna-RAW.mid',
         csv_filename = f'{streams_path}CC{control_number}_data.csv'
         cc_df.to_csv(csv_filename, index=False)
         list_of_streams.append(csv_filename)
-        print(f'Saved CC{control_number} data as {streams_path+csv_filename}')
+        print(f'Saved CC{control_number} data as {csv_filename}')
 
 
     if verbose:

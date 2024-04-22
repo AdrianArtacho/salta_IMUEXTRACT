@@ -62,5 +62,6 @@ INPUT/*
 OUTPUT/*
 !OUTPUT/.gitkeep
 
-stream_data/*
-!stream_data/.gitkeep
+# stream_data
+INTER/*             
+!INTER/.gitkeep
