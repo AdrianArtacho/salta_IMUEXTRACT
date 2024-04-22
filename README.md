@@ -26,9 +26,7 @@ Plot it :
 python combine_plot.py
 ```
 
-Both the resulting `CC-combined.csv` and the plot `CC-combined,png` will be stored in the folder `OUTPUT/`.
-
-
+Both the resulting `CC-combined.csv` and the plot `CC-combined.png` will be stored in the folder `OUTPUT/`.
 
 ---
 
@@ -37,3 +35,9 @@ Both the resulting `CC-combined.csv` and the plot `CC-combined,png` will be stor
 - How do I find out the `max_datapoint` in general?
 
 - Is it a problem that I don't have data for ALL the timestamp values? should I resample it to the same sampling as MPIPE or AUDIO
+
+---
+
+### To-Do
+
+[Trello](https://trello.com/b/eNrZMJnA/salta-segmentation-app)
