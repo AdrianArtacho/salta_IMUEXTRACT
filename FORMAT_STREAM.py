@@ -1,5 +1,5 @@
 import pandas as pd
-import gui.gui_browse as gui_browse
+import gui.gui_browse_t as gui_browse
 import math
 import pyt.paths.create_folder as create_folder
 

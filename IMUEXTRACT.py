@@ -5,7 +5,7 @@ import time_signature as time_signature
 import time_midi as time_midi
 import time_stamps as time_stamps
 import pyt.df.resampling as resampling
-import gui.gui_browse as gui_browse
+import gui.gui_browse_t as gui_browse
 import pyt.paths.empty_folder as empty_folder
 import pyt.paths.create_folder as create_folder
 import os
@@ -31,7 +31,7 @@ def main(midi_file = '',
         midi_file_path = gui_browse.main(params_title='Browse files [→TAB]',
                                     params_initbrowser='INPUT/',
                                     params_extensions=('.mid', '.midi'),               # E.g. '.csv'
-                                    size=(40,20),
+                                    # size=(40,20),
                                     verbose=False)
         # exit()
     else:

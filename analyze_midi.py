@@ -1,5 +1,5 @@
 import mido
-import gui.gui_browse as gui_browse
+import gui.gui_browse_t as gui_browse
 
 def analyze_midi_file(file_path, verbose=False):
     if verbose:

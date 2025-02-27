@@ -1,4 +1,4 @@
-import PySimpleGUI as sg
+# import PySimpleGUI as sg
 
 def parse_time_string(time_str):
     # time_str = '39:32.032'
