@@ -6,7 +6,7 @@ This script(s) process the raw input from different IMU devices.
 
 ## SOMI (IMU data as MIDI)
 
-#### Usage:
+### Usage
 
 Activate venv
 
@@ -20,7 +20,7 @@ Run main script:
 python IMUEXTRACT.py
 ```
 
-Plot it :
+Plot it (not necessary):
 
 ```python
 python combine_plot.py
